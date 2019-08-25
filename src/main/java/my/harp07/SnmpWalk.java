@@ -37,7 +37,7 @@ public class SnmpWalk {
     final static String   icmp_mib = "5"; 
     final static String    tcp_mib = "6";
     final static String    udp_mib = "7";    
-    final static String    dot_mib = "10";
+    final static String    dot_mib = "10"; // = transmission
     final static String   snmp_mib = "11";
     final static String    ifX_mib = "31";    
     
