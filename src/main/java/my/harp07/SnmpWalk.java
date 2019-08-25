@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.function.BiConsumer;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.Snmp;
 import org.snmp4j.TransportMapping;
@@ -28,17 +27,25 @@ public class SnmpWalk {
     static String snmp_comm="coldrom";
     static String snmp_vers="2";//SnmpConstants.version2c;
     static String snmp_port="161";
-    // standart mibs = IP, IP-FORWARD, IF, RFC1213, TCP, UDP
+    // standart mibs = 
+    // IP-MIB, 
+    // IP-FORWARD-MIB, 
+    // IF-MIB, 
+    // RFC1213-MIB, 
+    // TCP-MIB, 
+    // UDP-MIB, 
+    // EtherLike-MIB
+    // SNMPv2-MIB,
     final static String       base = "1.3.6.1.2.1.";
-    final static String system_mib = "1";
-    final static String     if_mib = "2";
-    final static String     at_mib = "3";
-    final static String     ip_mib = "4";
+    final static String system_mib = "1";  // SNMPv2-MIB,
+    final static String     if_mib = "2";  // IF-MIB,
+    final static String     at_mib = "3";  // address translation
+    final static String     ip_mib = "4";  // IP-MIB, 
     final static String   icmp_mib = "5"; 
-    final static String    tcp_mib = "6";
-    final static String    udp_mib = "7";    
-    final static String    dot_mib = "10"; // = transmission
-    final static String   snmp_mib = "11";
+    final static String    tcp_mib = "6";  // TCP-MIB, 
+    final static String    udp_mib = "7";  // UDP-MIB,    
+    final static String    dot_mib = "10"; // = transmission = EtherLike-MIB
+    final static String   snmp_mib = "11"; // SNMPv2-MIB,
     final static String    ifX_mib = "31";    
     
     static {
@@ -49,7 +56,7 @@ public class SnmpWalk {
     
 
     public static void main(String[] args) throws Exception {
-        walkMap = walkSNMP(IP, base + dot_mib, snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
+        walkMap = walkSNMP(IP, base + at_mib, snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
         walkMap.entrySet().forEach( x->{
            System.out.println(x.getKey() + " = " + x.getValue()); 
         });
