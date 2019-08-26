@@ -75,4 +75,30 @@ public interface IOID {
     // snmpwalk -c coldrom -v 2c 127.0.0.1 ipForward
     // snmpwalk -c coldrom -v 2c 127.0.0.1 at (address translation)
     
+    // standart mibs = 
+    // IP-MIB, 
+    // IP-FORWARD-MIB, 
+    // IF-MIB, 
+    // RFC1213-MIB, 
+    // TCP-MIB, 
+    // UDP-MIB, 
+    // EtherLike-MIB
+    // SNMPv2-MIB,
+    final static String       base = "1.3.6.1.2.1.";
+    final static String system_mib = "1";  // SNMPv2-MIB,
+    final static String     if_mib = "2";  // IF-MIB,
+    final static String     at_mib = "3";  // address translation
+    final static String     ip_mib = "4";  // IP-MIB, 
+    final static String   icmp_mib = "5"; 
+    final static String    tcp_mib = "6";  // TCP-MIB, 
+    final static String    udp_mib = "7";  // UDP-MIB,    
+    final static String    dot_mib = "10"; // = transmission = EtherLike-MIB
+    final static String   snmp_mib = "11"; // SNMPv2-MIB,
+    final static String    ifX_mib = "31";
+    
+    // ip-addresses of interfaces:
+    final static String base_ipIF = base + ip_mib;
+    final static String ip_index = ".20.1.2";
+    final static String ip_mask = ".20.1.3";    
+    
 }
