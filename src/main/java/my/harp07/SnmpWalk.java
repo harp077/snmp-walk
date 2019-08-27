@@ -27,7 +27,7 @@ import org.snmp4j.util.TreeUtils;
 
 public class SnmpWalk {
 
-    static String IP = "10.73.2.13";
+    static String IP = "10.73.2.25";
     static Map<String, String> walkMap;
     static Map<String, Integer> versionMap = new HashMap<>();
     static String snmp_comm = "look";
@@ -72,7 +72,7 @@ public class SnmpWalk {
     }
 
     public static void main(String[] args) throws Exception {
-        walkMap = walkSNMP(IP, base + ip_mib + ".20.1.3", snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
+        /*walkMap = walkSNMP(IP, base + ip_mib + ".20.1.3", snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
         walkMap.entrySet().forEach(x -> {
             System.out.println(x.getKey() + " = " + x.getValue());
         });
@@ -81,7 +81,7 @@ public class SnmpWalk {
         List<String> listIP_MASKS = walkSNMP(IP, base_ipIF + ip_masks, snmp_comm, snmp_port, snmp_vers)
                 .entrySet().stream().map(x -> StringUtils.substringAfter(x.getKey(), base_ipIF + ip_masks + ".") + "=" + x.getValue()).collect(toList());
         System.out.println("\n listIP_INDEX = " + listIP_INDEX);
-        System.out.println("\n listIP_MASKS = " + listIP_MASKS);
+        System.out.println("\n listIP_MASKS = " + listIP_MASKS);*/
         Map<String, String> mapIP_INDEX = walkSNMP(IP, base_ipIF + ip_index, snmp_comm, snmp_port, snmp_vers)
                 .entrySet().stream().collect(Collectors.toMap(
                         x -> StringUtils.substringAfter(x.getKey(), base_ipIF + ip_index + "."),
@@ -92,7 +92,7 @@ public class SnmpWalk {
                         x -> x.getValue()));
         System.out.println("\n mapIP_INDEX = " + mapIP_INDEX);
         System.out.println("\n mapIP_MASKS = " + mapIP_MASKS);        
-        Stream combined = Stream.concat(mapIP_INDEX.entrySet().stream(), mapIP_MASKS.entrySet().stream());
+        //Stream combined = Stream.concat(mapIP_INDEX.entrySet().stream(), mapIP_MASKS.entrySet().stream());
         Map<String, String> result=new HashMap<>();
         /*for (Map.Entry<String, String> ipi : mapIP_INDEX.entrySet()) {
             for (Map.Entry<String, String> ipm : mapIP_MASKS.entrySet()) {
@@ -111,8 +111,8 @@ public class SnmpWalk {
         ////////////
         Map<String,String> mapUDP_ADDR = walkSNMP(IP, UDP_BASE + UDP_LOCAL_ADDR, snmp_comm, snmp_port, snmp_vers);
         Map<String,String> mapUDP_PORT = walkSNMP(IP, UDP_BASE + UDP_LOCAL_PORT, snmp_comm, snmp_port, snmp_vers);
-        System.out.println("\n listUDP_ADDR = " + mapUDP_ADDR);
-        System.out.println("\n listUDP_PORT = " + mapUDP_PORT); 
+        System.out.println("\n mapUDP_ADDR = " + mapUDP_ADDR);
+        System.out.println("\n mapUDP_PORT = " + mapUDP_PORT+"\n"); 
         Set<String> udp_result=new HashSet<>();
         /*for (Map.Entry<String, String> ua : mapUDP_ADDR.entrySet()) {
             for (Map.Entry<String, String> up : mapUDP_PORT.entrySet()) {

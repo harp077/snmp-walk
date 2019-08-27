@@ -107,4 +107,16 @@ public interface IOID {
     final static String UDP_LOCAL_PORT =".5.1.2";
     final static String UDP_ERRORS =".3";
     
+    // ENTERPRISES MIBS:  1.3.6.1.4.1.*
+    /*
+          9   ciscoSystems
+         11   Hewlett-Packard
+         23   Novell
+         35   Nortel Networks
+         43   3Com
+        318   APC
+       2011   HUAWEI Technology Co.,Ltd 
+       2636   Juniper Networks, Inc.    
+    */
+    
 }
