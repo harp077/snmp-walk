@@ -99,6 +99,12 @@ public interface IOID {
     // ip-addresses of interfaces:
     final static String base_ipIF = base + ip_mib;
     final static String ip_index = ".20.1.2";
-    final static String ip_mask = ".20.1.3";    
+    final static String ip_mask = ".20.1.3"; 
+    
+    // udp
+    final static String UDP_BASE ="1.3.6.1.2.1.7";
+    final static String UDP_LOCAL_ADDR =".5.1.1";
+    final static String UDP_LOCAL_PORT =".5.1.2";
+    final static String UDP_ERRORS =".3";
     
 }

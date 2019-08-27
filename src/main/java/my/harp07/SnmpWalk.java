@@ -2,8 +2,10 @@ package my.harp07;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
@@ -25,7 +27,7 @@ import org.snmp4j.util.TreeUtils;
 
 public class SnmpWalk {
 
-    static String IP = "10.73.2.22";
+    static String IP = "10.73.2.13";
     static Map<String, String> walkMap;
     static Map<String, Integer> versionMap = new HashMap<>();
     static String snmp_comm = "look";
@@ -57,6 +59,11 @@ public class SnmpWalk {
     final static String base_ipIF = base + ip_mib;
     final static String ip_index = ".20.1.2";
     final static String ip_masks = ".20.1.3";
+    // udp
+    final static String UDP_BASE ="1.3.6.1.2.1.7";
+    final static String UDP_LOCAL_ADDR =".5.1.1";
+    final static String UDP_LOCAL_PORT =".5.1.2";
+    final static String UDP_ERRORS =".3";    
 
     static {
         versionMap.put("1", SnmpConstants.version1);
@@ -101,6 +108,28 @@ public class SnmpWalk {
             });
         });
         System.out.println("\n result = " + result);
+        ////////////
+        Map<String,String> mapUDP_ADDR = walkSNMP(IP, UDP_BASE + UDP_LOCAL_ADDR, snmp_comm, snmp_port, snmp_vers);
+        Map<String,String> mapUDP_PORT = walkSNMP(IP, UDP_BASE + UDP_LOCAL_PORT, snmp_comm, snmp_port, snmp_vers);
+        System.out.println("\n listUDP_ADDR = " + mapUDP_ADDR);
+        System.out.println("\n listUDP_PORT = " + mapUDP_PORT); 
+        Set<String> udp_result=new HashSet<>();
+        /*for (Map.Entry<String, String> ua : mapUDP_ADDR.entrySet()) {
+            for (Map.Entry<String, String> up : mapUDP_PORT.entrySet()) {
+                if (up.getKey().contains("."+ua.getValue()+".")) {
+                    udp_result.add(ua.getValue()+":"+up.getValue());
+                }
+ 
+            }
+        }*/         
+        mapUDP_ADDR.entrySet().forEach((ua) -> {
+            mapUDP_PORT.entrySet().stream().
+                    filter((up) -> (up.getKey().contains("."+ua.getValue()+".")))
+                    .forEachOrdered((up) -> {
+                udp_result.add(ua.getValue()+":"+up.getValue());
+            });
+        });   
+        udp_result.stream().sorted().forEach(x->System.out.println(x));
     }
 
     public static Map<String, String> walkSNMP(String ip, String oid, String comm, String port, String vers) throws IOException {
