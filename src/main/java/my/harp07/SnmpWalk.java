@@ -27,7 +27,7 @@ import org.snmp4j.util.TreeUtils;
 
 public class SnmpWalk {
 
-    static String IP = "10.73.2.25";
+    static String IP = "10.73.2.28";
     static Map<String, String> walkMap;
     static Map<String, Integer> versionMap = new HashMap<>();
     static String snmp_comm = "look";
@@ -63,7 +63,10 @@ public class SnmpWalk {
     final static String UDP_BASE ="1.3.6.1.2.1.7";
     final static String UDP_LOCAL_ADDR =".5.1.1";
     final static String UDP_LOCAL_PORT =".5.1.2";
-    final static String UDP_ERRORS =".3";    
+    final static String UDP_ERRORS =".3";
+    //
+    final static String checkIf32 = "1.3.6.1.2.1.2.2.1.1";
+    final static String checkIf64 = "1.3.6.1.2.1.31.1.1.1.1";
 
     static {
         versionMap.put("1", SnmpConstants.version1);
@@ -72,16 +75,22 @@ public class SnmpWalk {
     }
 
     public static void main(String[] args) throws Exception {
-        /*walkMap = walkSNMP(IP, base + ip_mib + ".20.1.3", snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
+        walkMap = walkSNMP(IP, checkIf32, snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
+        System.out.println("32 bit empty = "+walkMap.isEmpty());
         walkMap.entrySet().forEach(x -> {
             System.out.println(x.getKey() + " = " + x.getValue());
         });
+        walkMap = walkSNMP(IP, checkIf64, snmp_comm, snmp_port, snmp_vers); // ifTable, mib-2 interfaces
+        System.out.println("64 bit empty = "+walkMap.isEmpty());
+        walkMap.entrySet().forEach(x -> {
+            System.out.println(x.getKey() + " = " + x.getValue());
+        });        
         List<String> listIP_INDEX = walkSNMP(IP, base_ipIF + ip_index, snmp_comm, snmp_port, snmp_vers)
                 .entrySet().stream().map(x -> StringUtils.substringAfter(x.getKey(), base_ipIF + ip_index + ".") + "=" + x.getValue()).collect(toList());
         List<String> listIP_MASKS = walkSNMP(IP, base_ipIF + ip_masks, snmp_comm, snmp_port, snmp_vers)
                 .entrySet().stream().map(x -> StringUtils.substringAfter(x.getKey(), base_ipIF + ip_masks + ".") + "=" + x.getValue()).collect(toList());
         System.out.println("\n listIP_INDEX = " + listIP_INDEX);
-        System.out.println("\n listIP_MASKS = " + listIP_MASKS);*/
+        System.out.println("\n listIP_MASKS = " + listIP_MASKS);
         Map<String, String> mapIP_INDEX = walkSNMP(IP, base_ipIF + ip_index, snmp_comm, snmp_port, snmp_vers)
                 .entrySet().stream().collect(Collectors.toMap(
                         x -> StringUtils.substringAfter(x.getKey(), base_ipIF + ip_index + "."),
